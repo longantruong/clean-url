@@ -1,10 +1,4 @@
-const TRACKING_PARAMS = [
-  "utm_source",
-  "utm_medium",
-  "utm_campaign",
-  "utm_term",
-  "utm_content",
-] as const;
+import { isTrackingParam } from "./rules.js";
 
 export function cleanUrl(input: string): string {
   let url: URL;
@@ -15,14 +9,20 @@ export function cleanUrl(input: string): string {
   }
 
   const params = url.searchParams;
-  let modified = false;
-
-  for (const param of TRACKING_PARAMS) {
-    if (params.has(param)) {
-      params.delete(param);
-      modified = true;
+  const trackingNames = new Set<string>();
+  params.forEach((_value, name) => {
+    if (isTrackingParam(name)) {
+      trackingNames.add(name);
     }
+  });
+
+  if (trackingNames.size === 0) {
+    return input;
   }
 
-  return modified ? url.toString() : input;
+  for (const name of trackingNames) {
+    params.delete(name);
+  }
+
+  return url.toString();
 }
