@@ -2,6 +2,10 @@
   "manifest_version": 3,
   "name": "CleanCopy",
   "version": "0.1.0",
+  "description": "Copy clean URLs with one click.",
+  "permissions": [
+    "activeTab"
+  ],
   "background": {
     "service_worker": "dist/background.js",
     "type": "module"
