@@ -1,0 +1,14 @@
+{
+  "name": "clean-copy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.7",
+    "typescript": "^7.0.2"
+  }
+}
