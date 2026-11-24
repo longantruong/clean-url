@@ -3,8 +3,11 @@
   "name": "CleanCopy",
   "version": "0.1.0",
   "description": "Copy clean URLs with one click.",
+  "minimum_chrome_version": "116",
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "offscreen",
+    "clipboardWrite"
   ],
   "background": {
     "service_worker": "dist/background.js",

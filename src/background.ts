@@ -1,14 +1,27 @@
 import { cleanUrl } from './cleaner.js';
+import { copyToClipboard } from './clipboard.js';
 
-chrome.action.onClicked.addListener((tab) => {
+chrome.action.onClicked.addListener(async (tab) => {
   if (!tab.url) {
-    console.warn('Current tab URL is unavailable.');
     return;
   }
 
-  const originalUrl = tab.url;
-  const cleanedUrl = cleanUrl(originalUrl);
+  try {
+    const url = new URL(tab.url);
 
-  console.log('Original URL:', originalUrl);
-  console.log('Cleaned URL:', cleanedUrl);
+    if (
+      url.protocol !== 'http:' &&
+      url.protocol !== 'https:'
+    ) {
+      return;
+    }
+
+    const cleanedUrl = cleanUrl(tab.url);
+
+    await copyToClipboard(cleanedUrl);
+
+    console.info('URL copied successfully.');
+  } catch {
+    console.error('Failed to copy URL.');
+  }
 });
